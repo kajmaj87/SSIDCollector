@@ -1,5 +1,7 @@
 package kajman.ssid.model.entity;
 
+import java.sql.Date;
+
 import android.provider.BaseColumns;
 
 public class LogEntry {
@@ -13,10 +15,22 @@ public class LogEntry {
 	private long date;
 	private String content;
 	
+	public static final String TABLE_NAME = "log_entry";
+	
 	public static final class Columns implements BaseColumns{		
 		public static final String TYPE = "type",
 								   CONTENT = "content",
 								   DATE = "date";		
+	}
+	
+	public LogEntry(){
+		
+	}
+	
+	public LogEntry(int type, String content){
+		date = System.currentTimeMillis();
+		this.type=type;
+		this.content=content;
 	}
 
 	public int getType() {
@@ -41,6 +55,10 @@ public class LogEntry {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String toString(){
+		return (new Date(date)).toLocaleString() +" | " +content;
 	}
 	
 }

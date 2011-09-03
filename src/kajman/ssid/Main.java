@@ -2,9 +2,14 @@ package kajman.ssid;
 
 import java.util.List;
 
+import kajman.ssid.model.LogModel;
+import kajman.ssid.model.WifiModel;
+import kajman.ssid.receivers.Recurring;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -19,11 +24,8 @@ import android.widget.Toast;
 
 public class Main extends Activity implements OnClickListener {
 	private static final String TAG = "WiFiDemo";
-	WifiManager wifi;
-	BroadcastReceiver receiver;
 
 	TextView textStatus;
-	Button buttonScan;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -33,37 +35,37 @@ public class Main extends Activity implements OnClickListener {
 
 		// Setup UI
 		textStatus = (TextView) findViewById(R.id.textStatus);
-		buttonScan = (Button) findViewById(R.id.buttonScan);
+		Button buttonScan = (Button) findViewById(R.id.buttonScan);
 		buttonScan.setOnClickListener(this);
-
-		// Setup WiFi
-		wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-		// Get WiFi status
-		WifiInfo info = wifi.getConnectionInfo();
-		textStatus.append("\n\nWiFi Status: " + info.toString());
-
-		// List available networks
-		List<WifiConfiguration> configs = wifi.getConfiguredNetworks();
-		for (WifiConfiguration config : configs) {
-			textStatus.append("\n\n" + config.toString());
-		}
-
-//		// Register Broadcast Receiver
-//		if (receiver == null)
-//			receiver = new WiFiScanReceiver(this);
-
-//		registerReceiver(receiver, new IntentFilter(
-	//			WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+		Button buttonWifi = (Button) findViewById(R.id.buttonWifis);
+		buttonWifi.setOnClickListener(this);
+		Button buttonLogs = (Button) findViewById(R.id.buttonLogs);
+		buttonLogs.setOnClickListener(this);
+		Button buttonRegister = (Button) findViewById(R.id.buttonRegister);
+		buttonRegister.setOnClickListener(this);
 		Log.d(TAG, "onCreate()");
 	}
 
 	public void onClick(View view) {
 		
+		if (view.getId() == R.id.buttonRegister) {
+			Intent mIntent = new Intent();
+			mIntent.setAction(Recurring.ACTION);
+			sendBroadcast(mIntent);
+		}
 		if (view.getId() == R.id.buttonScan) {
-			Log.d("DEBUG", "onClick() wifi.startScan()");
+			WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 			wifi.startScan();
 		}
+		if (view.getId() == R.id.buttonLogs) {
+			LogModel logModel = new LogModel(this);
+			textStatus.setText(logModel.toString());
+		}
+		if (view.getId() == R.id.buttonWifis) {
+			WifiModel wifiModel = new WifiModel(this);
+			String temp = wifiModel.toString();
+			textStatus.setText(temp);
+		}		
 	}
 
 }

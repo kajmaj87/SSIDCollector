@@ -14,9 +14,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="kajman.ssid.WiFiScanReceiver">
+        <receiver android:name="kajman.ssid.receivers.ScanReceiver">
         		<intent-filter>
         			<action android:name="android.net.wifi.SCAN_RESULTS"/>
+          		</intent-filter> 
+        </receiver>
+        <receiver android:name="kajman.ssid.receivers.Recurring">
+        		<intent-filter>
+        			<action android:name="kajman.ssid.receiver.recurring"/>
           		</intent-filter> 
         </receiver>
     </application>

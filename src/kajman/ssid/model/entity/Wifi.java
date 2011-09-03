@@ -9,6 +9,8 @@ public class Wifi {
 	private int channel;
 	private long scanNumber, date;
 	
+	public static final String TABLE_NAME = "wifi";
+	
 	public static final class Columns implements BaseColumns{		
 		public static final String BSSID = "type",
 								   SSID = "content",
@@ -16,6 +18,19 @@ public class Wifi {
 								   CHANNEL = "channel",
 								   SCAN_NUMBER = "scan_number",
 								   DATE = "date";		
+	}
+	
+	public Wifi(){
+		
+	}
+	
+	public Wifi(ScanResult result, long scanNumber){
+		bssid = result.BSSID;
+		ssid  = result.SSID;
+		capabilities = result.capabilities;
+		channel = result.frequency;
+		date = System.currentTimeMillis();
+		this.scanNumber=scanNumber;
 	}
 
 	public String getBssid() {
@@ -64,6 +79,11 @@ public class Wifi {
 
 	public void setDate(long date) {
 		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s : %s", bssid,ssid);
 	}
 
 	
