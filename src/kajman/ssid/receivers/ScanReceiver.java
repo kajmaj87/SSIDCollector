@@ -27,19 +27,33 @@ public class ScanReceiver extends BroadcastReceiver {
 	LogModel log = new LogModel(context);
 	long time = System.currentTimeMillis();
 	log.v("Recieved scan results.");
+	WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+	List<ScanResult> results = wifiManager.getScanResults();
+	if(results==null){
+		log.e("No scan results! Leaving.");
+		log.closeDb();
+		return;
+	}
 	SettingsModel settingsModel = new SettingsModel(context);
 	WifiModel wifiModel = new WifiModel(context);
 	  
-	WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-	List<ScanResult> results = wifiManager.getScanResults();
+	
 	ArrayList<Wifi> wifis = new ArrayList<Wifi>(results.size());
 	long scanNumber = settingsModel.getScanNumber();
+	if(scanNumber%200 == 0){
+		log.v("Deleting log entries older then 24h.");
+		long now=System.currentTimeMillis();
+		log.v("Deleted: "+log.deleteOlderThan(now-(24l*60l*60l*1000l))+" entries.");
+		log.v("Took: "+(System.currentTimeMillis()-now)+"ms.");
+	}
     for (ScanResult result : results) {    	
     	wifis.add(new Wifi(result, scanNumber));
     }    
     settingsModel.setScanNumber(scanNumber+1);
+    settingsModel.closeDb();
     long saved = wifiModel.save(wifis);
-    log.v("Scan results saved. Took "+(System.currentTimeMillis()-time)+"ms.");
+    wifiModel.closeDb();
+    log.v("Scan "+scanNumber+" saved. Took "+(System.currentTimeMillis()-time)+"ms.");
     log.v("Saved "+saved+" new records.");
     Log.d("DEBUG", String.format("Saved %d in %dms. Scan number: %d",saved,System.currentTimeMillis()-time,scanNumber));
     log.closeDb();

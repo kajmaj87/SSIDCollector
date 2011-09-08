@@ -30,6 +30,9 @@ public class Recurring extends BroadcastReceiver {
 		long delay= getDelayByScanDifferance(settingsModel.getScanNumber()-wifiModel.fetchLastScanNumber());
 		String message = "Next check in "+delay+"ms (at "+(new Date(System.currentTimeMillis()+delay)).toLocaleString()+")";
 		log.v(message);
+		wifiModel.closeDb();
+		settingsModel.closeDb();
+		log.closeDb();
 		Log.d("DEBUG",message);
 		Intent mIntent = new Intent();
 		mIntent.setAction(ACTION);

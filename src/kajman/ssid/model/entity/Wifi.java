@@ -12,8 +12,8 @@ public class Wifi {
 	public static final String TABLE_NAME = "wifi";
 	
 	public static final class Columns implements BaseColumns{		
-		public static final String BSSID = "type",
-								   SSID = "content",
+		public static final String BSSID = "bssid",
+								   SSID = "ssid",
 								   CAPABILITIES = "capabilities",
 								   CHANNEL = "channel",
 								   SCAN_NUMBER = "scan_number",
@@ -83,7 +83,7 @@ public class Wifi {
 
 	@Override
 	public String toString() {
-		return String.format("%s : %s", bssid,ssid);
+		return String.format("%s %s", bssid,ssid);
 	}
 
 	

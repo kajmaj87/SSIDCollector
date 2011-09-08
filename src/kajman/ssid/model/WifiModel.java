@@ -47,8 +47,9 @@ public class WifiModel extends DbModel {
 	
 	public String toString(){
 		Cursor cursor = getDb().query(Wifi.TABLE_NAME, 
-				null, null, null, null, null, Wifi.Columns.BSSID + " ASC", "100");
+				null, null, null, null, null, Wifi.Columns.BSSID + " ASC", null);
 		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Total in db: "+cursor.getCount()+"\n");
 		while(cursor.moveToNext()){
 			stringBuilder.append(getWifi(cursor).toString()+"\n");
 		}

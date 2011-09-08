@@ -21,13 +21,17 @@ public class LogModel extends DbModel {
 	
 	public String toString(){
 		Cursor cursor = getDb().query(LogEntry.TABLE_NAME, 
-				null, null, null, null, null, LogEntry.Columns.DATE + " DESC", "100");
+				null, LogEntry.Columns.DATE+ " > '" + (System.currentTimeMillis()-60*60*1000)+"'", null, null, null, LogEntry.Columns.DATE + " DESC");
 		StringBuilder stringBuilder = new StringBuilder();
 		while(cursor.moveToNext()){
 			stringBuilder.append(getLogEntry(cursor).toString()+"\n");
 		}
 		cursor.close();
 		return stringBuilder.toString();
+	}
+	
+	public int deleteOlderThan(long time){
+		return getDb().delete(LogEntry.TABLE_NAME, LogEntry.Columns.DATE + " < '"+time+"'", null);		
 	}
 	
 	public LogEntry getLogEntry(Cursor cursor){
