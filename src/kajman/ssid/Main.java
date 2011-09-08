@@ -45,14 +45,14 @@ public class Main extends Activity implements OnClickListener {
 		buttonWifi.setOnClickListener(this);
 		Button buttonLogs = (Button) findViewById(R.id.buttonLogs);
 		buttonLogs.setOnClickListener(this);
-		Button buttonRegister = (Button) findViewById(R.id.buttonRegister);
+		Button buttonRegister = (Button) findViewById(R.id.buttonExport);
 		buttonRegister.setOnClickListener(this);
 		Log.d(TAG, "onCreate()");
 	}
 
 	public void onClick(View view) {
 		
-		if (view.getId() == R.id.buttonRegister) {
+		if (view.getId() == R.id.buttonExport) {
 //			Intent mIntent = new Intent();
 //			mIntent.setAction(Recurring.ACTION);
 //			sendBroadcast(mIntent);

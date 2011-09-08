@@ -20,8 +20,7 @@ public class LogModel extends DbModel {
 	}
 	
 	public String toString(){
-		Cursor cursor = getDb().query(LogEntry.TABLE_NAME, 
-				null, LogEntry.Columns.DATE+ " > '" + (System.currentTimeMillis()-60*60*1000)+"'", null, null, null, LogEntry.Columns.DATE + " DESC");
+		Cursor cursor = getDb().query(LogEntry.TABLE_NAME,null, null, null, null, null, LogEntry.Columns.DATE + " DESC", "500");
 		StringBuilder stringBuilder = new StringBuilder();
 		while(cursor.moveToNext()){
 			stringBuilder.append(getLogEntry(cursor).toString()+"\n");
