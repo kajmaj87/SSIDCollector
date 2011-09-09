@@ -1,6 +1,5 @@
 package kajman.ssid.model;
 
-import kajman.ssid.model.entity.LogEntry;
 import kajman.ssid.model.entity.Wifi;
 import android.content.ContentValues;
 import android.content.Context;

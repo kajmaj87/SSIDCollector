@@ -6,7 +6,6 @@ import java.util.List;
 import kajman.ssid.model.LogModel;
 import kajman.ssid.model.SettingsModel;
 import kajman.ssid.model.WifiModel;
-import kajman.ssid.model.entity.Settings;
 import kajman.ssid.model.entity.Wifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +25,6 @@ public class ScanReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
 	LogModel log = new LogModel(context);
 	long time = System.currentTimeMillis();
-	log.v("Recieved scan results.");
 	WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 	List<ScanResult> results = wifiManager.getScanResults();
 	if(results==null){
@@ -58,7 +56,7 @@ public class ScanReceiver extends BroadcastReceiver {
     }
     wifiModel.closeDb();
     log.v("Scan "+scanNumber+" saved. Took "+(System.currentTimeMillis()-time)+"ms.");
-    log.v("Saved "+saved+" new records.");
+    if(saved>0) log.v("Saved "+saved+" new records.");
     Log.d("DEBUG", String.format("Saved %d in %dms. Scan number: %d",saved,System.currentTimeMillis()-time,scanNumber));
     log.closeDb();
   }

@@ -1,6 +1,7 @@
 package kajman.ssid.model.entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import android.provider.BaseColumns;
 
@@ -58,7 +59,8 @@ public class LogEntry {
 	}
 	
 	public String toString(){
-		return (new Date(date)).toLocaleString() +" | " +content;
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		return sdf.format(new Date(date))+" | " +content;
 	}
 	
 }
