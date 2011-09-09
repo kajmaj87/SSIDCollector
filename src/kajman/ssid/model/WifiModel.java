@@ -72,7 +72,7 @@ public class WifiModel extends DbModel {
 		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns.DATE+")"+
 										 " from "+Wifi.TABLE_NAME, null);
 		if(cursor.moveToNext()){
-			return cursor.getLong(0);
+			return cursor.getLong(cursor.getColumnIndex("max("+Wifi.Columns.DATE+")"));
 		}else{
 			return 0;
 		}
@@ -83,7 +83,7 @@ public class WifiModel extends DbModel {
 		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns.SCAN_NUMBER+")"+
 				 " from "+Wifi.TABLE_NAME, null);
 		if(cursor.moveToNext()){
-			result = cursor.getLong(0);
+			result = cursor.getLong(cursor.getColumnIndex("max("+Wifi.Columns.SCAN_NUMBER+")"));
 			Log.d("DEBUG","lastScanNumber is "+result);
 		}
 		cursor.close();
