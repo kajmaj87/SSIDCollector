@@ -68,6 +68,16 @@ public class WifiModel extends DbModel {
 		return wifi;
 	}
 	
+	public long fetchLastScanTime(){
+		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns._ID+"), "+Wifi.Columns.DATE+
+										 " from "+Wifi.TABLE_NAME, null);
+		if(cursor.moveToFirst()){
+			return cursor.getLong(cursor.getColumnIndex(Wifi.Columns.DATE));
+		}else{
+			return 0;
+		}
+	}
+	
 	public long fetchLastScanNumber(){
 		long result = 0;
 		Cursor cursor = getDb().query(Wifi.TABLE_NAME, new String[] {Wifi.Columns.SCAN_NUMBER}, 
