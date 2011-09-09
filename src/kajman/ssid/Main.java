@@ -103,6 +103,7 @@ public class Main extends Activity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
+		RawQuery rawQuery = new RawQuery(this);
 	    switch (item.getItemId()) {
 	    case R.id.menu_date_time:
 	        //newGame();
@@ -110,9 +111,21 @@ public class Main extends Activity implements OnClickListener {
 	    case R.id.menu_wifi:
 	        //showHelp();
 	        return true;
-	    case R.id.menu_item_top_names:
-	    	RawQuery rawQuery = new RawQuery(this);
+	    case R.id.menu_item_top_names:	    	
 	    	textStatus.setText(rawQuery.toString(rawQuery.fetchTopNames()));
+	    	return true;
+	    case R.id.menu_item_bssid:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchWifisByBSSID()));
+	    	return true;
+	    case R.id.menu_item_name:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchWifisByName()));
+	    	return true;
+	    case R.id.menu_item_records_by_scan:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchRecordsByScanNumner()));
+	    	return true;
+	    case R.id.menu_item_channels:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchByChannels()));
+	    	return true;	
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
