@@ -3,19 +3,11 @@ package kajman.ssid;
 import helpers.exportHelper;
 
 import java.io.IOException;
-import java.util.List;
 
 import kajman.ssid.model.LogModel;
 import kajman.ssid.model.WifiModel;
-import kajman.ssid.receivers.Recurring;
-
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Main extends Activity implements OnClickListener {
 	private static final String TAG = "WiFiDemo";
@@ -53,9 +44,6 @@ public class Main extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		
 		if (view.getId() == R.id.buttonExport) {
-//			Intent mIntent = new Intent();
-//			mIntent.setAction(Recurring.ACTION);
-//			sendBroadcast(mIntent);
 			try {
 				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
 				exportHelper.exportDatabase(Environment.getExternalStorageDirectory()+"/ssid.db");

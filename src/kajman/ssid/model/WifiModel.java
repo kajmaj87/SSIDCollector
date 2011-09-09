@@ -23,7 +23,7 @@ public class WifiModel extends DbModel {
            String.format("%s = '%s' AND %s = '%s' AND %s = '%s'",
         		   		  Wifi.Columns.BSSID, input.getBssid(), Wifi.Columns.CAPABILITIES,input.getCapabilities(),
         		   		  Wifi.Columns.SSID,input.getSsid()),null)==0){
-        	Log.d("DEBUG","Inserting new wifi");
+        	Log.d("SSID","Inserting new wifi");
         	values.put(Wifi.Columns.DATE,input.getDate());
         	values.put(Wifi.Columns.SCAN_NUMBER,input.getScanNumber());
         	return getDb().insert(Wifi.TABLE_NAME, "", values);
@@ -69,10 +69,10 @@ public class WifiModel extends DbModel {
 	}
 	
 	public long fetchLastScanTime(){
-		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns._ID+"), "+Wifi.Columns.DATE+
+		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns.DATE+")"+
 										 " from "+Wifi.TABLE_NAME, null);
-		if(cursor.moveToFirst()){
-			return cursor.getLong(cursor.getColumnIndex(Wifi.Columns.DATE));
+		if(cursor.moveToNext()){
+			return cursor.getLong(0);
 		}else{
 			return 0;
 		}
@@ -80,11 +80,10 @@ public class WifiModel extends DbModel {
 	
 	public long fetchLastScanNumber(){
 		long result = 0;
-		Cursor cursor = getDb().query(Wifi.TABLE_NAME, new String[] {Wifi.Columns.SCAN_NUMBER}, 
-				null, null, null, null, Wifi.Columns.SCAN_NUMBER + " DESC");
-		Log.d("DEBUG","Fetching scan number (wifis in db: "+cursor.getCount()+")");
+		Cursor cursor = getDb().rawQuery("select max("+Wifi.Columns.SCAN_NUMBER+")"+
+				 " from "+Wifi.TABLE_NAME, null);
 		if(cursor.moveToNext()){
-			result = cursor.getLong(cursor.getColumnIndex(Wifi.Columns.SCAN_NUMBER));
+			result = cursor.getLong(0);
 			Log.d("DEBUG","lastScanNumber is "+result);
 		}
 		cursor.close();
