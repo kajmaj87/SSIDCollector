@@ -25,7 +25,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:id="@+id/buttonExport"
-    android:text="Export db"/>
+    android:text="Export"/>
+  <Button 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:id="@+id/buttonImport"
+    android:text="Import"/>
   </LinearLayout>
   
   <ScrollView android:id="@+id/ScrollView01"

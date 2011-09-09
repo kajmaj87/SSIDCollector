@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menu_wifi" android:menuCategory="container"
+		android:titleCondensed="Wifis">
+		<menu>
+			<item android:title="By BSSID" android:id="@+id/menu_item_bssid"></item>
+			<item android:title="By Name" android:id="@+id/menu_item_name"></item>
+			<item android:title="Top Names" android:id="@+id/menu_item_top_names"></item>
+			<item android:title="Records by scan" android:id="@+id/menu_item_records_by_scan"></item>
+			<item android:title="Channels" android:id="@+id/menu_item_channels"></item>
+		</menu>
+	</item>
+	<item android:title="Date and Time" android:id="@+id/menu_date_time">
+		<menu>
+			<item android:title="Dates" android:id="@+id/menu_item_dates"></item>
+			<item android:title="Weekdays" android:id="@+id/menu_item_weekdays"></item>
+			<item android:title="Hours" android:id="@+id/menu_item_hours"></item>
+		</menu>
+	</item>
+</menu>

@@ -1,6 +1,6 @@
 package kajman.ssid;
 
-import helpers.exportHelper;
+import helpers.ExportHelper;
 
 import java.io.IOException;
 
@@ -12,10 +12,14 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main extends Activity implements OnClickListener {
 	private static final String TAG = "WiFiDemo";
@@ -46,8 +50,26 @@ public class Main extends Activity implements OnClickListener {
 		if (view.getId() == R.id.buttonExport) {
 			try {
 				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
-				exportHelper.exportDatabase(Environment.getExternalStorageDirectory()+"/ssid.db");
+				if(ExportHelper.exportDatabaseTo(Environment.getExternalStorageDirectory()+"/ssid.db")){
+					Toast.makeText(this, "Export succesful", Toast.LENGTH_SHORT);
+				}else{
+					Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT);
+				}
 			} catch (IOException e) {
+				Toast.makeText(this, "Export encountered an error", Toast.LENGTH_SHORT);
+				Log.d("SSID","Error: "+e);
+			}
+		}
+		if (view.getId() == R.id.buttonImport) {
+			try {
+				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
+				if(ExportHelper.importDatabaseFrom(Environment.getExternalStorageDirectory()+"/ssid.db")){
+					Toast.makeText(this, "Import succesful", Toast.LENGTH_SHORT);
+				}else{
+					Toast.makeText(this, "Import failed", Toast.LENGTH_SHORT);
+				}
+			} catch (IOException e) {
+				Toast.makeText(this, "Import encountered an error", Toast.LENGTH_SHORT);
 				Log.d("SSID","Error: "+e);
 			}
 		}
@@ -67,5 +89,28 @@ public class Main extends Activity implements OnClickListener {
 			wifiModel.closeDb();
 		}		
 	}
-
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    case R.id.menu_date_time:
+	        //newGame();
+	        return true;
+	    case R.id.menu_wifi:
+	        //showHelp();
+	        return true;
+	    case R.id.menu_item_top_names:
+	    	
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
 }
