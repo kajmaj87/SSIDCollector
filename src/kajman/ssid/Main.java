@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import kajman.ssid.helpers.ExportHelper;
 import kajman.ssid.model.LogModel;
+import kajman.ssid.model.RawQuery;
 import kajman.ssid.model.WifiModel;
 import android.app.Activity;
 import android.content.Context;
@@ -110,7 +111,8 @@ public class Main extends Activity implements OnClickListener {
 	        //showHelp();
 	        return true;
 	    case R.id.menu_item_top_names:
-	    	
+	    	RawQuery rawQuery = new RawQuery(this);
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchTopNames()));
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
