@@ -1,9 +1,9 @@
 package kajman.ssid;
 
-import helpers.ExportHelper;
 
 import java.io.IOException;
 
+import kajman.ssid.helpers.ExportHelper;
 import kajman.ssid.model.LogModel;
 import kajman.ssid.model.WifiModel;
 import android.app.Activity;
@@ -40,8 +40,10 @@ public class Main extends Activity implements OnClickListener {
 		buttonWifi.setOnClickListener(this);
 		Button buttonLogs = (Button) findViewById(R.id.buttonLogs);
 		buttonLogs.setOnClickListener(this);
-		Button buttonRegister = (Button) findViewById(R.id.buttonExport);
-		buttonRegister.setOnClickListener(this);
+		Button buttonExport = (Button) findViewById(R.id.buttonExport);
+		buttonExport.setOnClickListener(this);
+		Button buttonImport = (Button) findViewById(R.id.buttonImport);
+		buttonImport.setOnClickListener(this);
 		Log.d(TAG, "onCreate()");
 	}
 
@@ -51,12 +53,12 @@ public class Main extends Activity implements OnClickListener {
 			try {
 				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
 				if(ExportHelper.exportDatabaseTo(Environment.getExternalStorageDirectory()+"/ssid.db")){
-					Toast.makeText(this, "Export succesful", Toast.LENGTH_SHORT);
+					Toast.makeText(this, "Export succesful", Toast.LENGTH_SHORT).show();
 				}else{
-					Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT);
+					Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
 				}
 			} catch (IOException e) {
-				Toast.makeText(this, "Export encountered an error", Toast.LENGTH_SHORT);
+				Toast.makeText(this, "Export encountered an error", Toast.LENGTH_SHORT).show();
 				Log.d("SSID","Error: "+e);
 			}
 		}
@@ -64,12 +66,12 @@ public class Main extends Activity implements OnClickListener {
 			try {
 				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
 				if(ExportHelper.importDatabaseFrom(Environment.getExternalStorageDirectory()+"/ssid.db")){
-					Toast.makeText(this, "Import succesful", Toast.LENGTH_SHORT);
+					Toast.makeText(this, "Import succesful", Toast.LENGTH_SHORT).show();
 				}else{
-					Toast.makeText(this, "Import failed", Toast.LENGTH_SHORT);
+					Toast.makeText(this, "Import failed", Toast.LENGTH_SHORT).show();
 				}
 			} catch (IOException e) {
-				Toast.makeText(this, "Import encountered an error", Toast.LENGTH_SHORT);
+				Toast.makeText(this, "Import encountered an error", Toast.LENGTH_SHORT).show();
 				Log.d("SSID","Error: "+e);
 			}
 		}

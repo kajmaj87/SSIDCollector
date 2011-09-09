@@ -1,4 +1,4 @@
-package helpers;
+package kajman.ssid.helpers;
 
 import java.io.File;
 import java.io.FileInputStream;

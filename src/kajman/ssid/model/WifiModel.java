@@ -83,7 +83,7 @@ public class WifiModel extends DbModel {
 				 " from "+Wifi.TABLE_NAME, null);
 		if(cursor.moveToNext()){
 			result = cursor.getLong(cursor.getColumnIndex("max("+Wifi.Columns.SCAN_NUMBER+")"));
-			Log.d("DEBUG","lastScanNumber is "+result);
+			Log.d("SSID","lastScanNumber is "+result);
 		}
 		cursor.close();
 		return result;

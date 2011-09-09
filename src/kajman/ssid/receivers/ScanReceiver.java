@@ -18,7 +18,6 @@ public class ScanReceiver extends BroadcastReceiver {
 
   public ScanReceiver(){
 	  super();
-	  Log.d("DEBUG", "Wifi scan receiver created.");
   }
 
   @Override
@@ -57,7 +56,7 @@ public class ScanReceiver extends BroadcastReceiver {
     wifiModel.closeDb();
     log.v("Scan "+scanNumber+" saved. Took "+(System.currentTimeMillis()-time)+"ms.");
     if(saved>0) log.v("Saved "+saved+" new records.");
-    Log.d("DEBUG", String.format("Saved %d in %dms. Scan number: %d",saved,System.currentTimeMillis()-time,scanNumber));
+    Log.d("SSID", String.format("Saved %d in %dms. Scan number: %d",saved,System.currentTimeMillis()-time,scanNumber));
     log.closeDb();
   }
 
