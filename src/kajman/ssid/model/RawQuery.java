@@ -1,5 +1,7 @@
 package kajman.ssid.model;
 
+import java.util.TimeZone;
+
 import kajman.ssid.model.entity.Wifi;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,16 +43,18 @@ public class RawQuery extends DbModel {
 					"group by number", Wifi.TABLE_NAME,
 					Wifi.Columns._ID, Wifi.Columns.BSSID, Wifi.Columns.SSID, Wifi.TABLE_NAME, Wifi.Columns.BSSID,
 					Wifi.Columns._ID,Wifi.Columns._ID,Wifi.Columns.SCAN_NUMBER);
+	//offset in seconds for actual time zone (daylight saving included)
+	private static final int OFFSET = TimeZone.getDefault().getOffset(System.currentTimeMillis())/1000;
 	
 	private static final String RECORDS_BY_HOUR = String.format(
-			"select strftime('%%H',%s/1000,'unixepoch') as hour, count(*) as records " +
-			"from %s group by hour",Wifi.Columns.DATE,Wifi.TABLE_NAME);
+			"select strftime('%%H',%s/1000+%d,'unixepoch') as hour, count(*) as records " +
+			"from %s group by hour",Wifi.Columns.DATE,OFFSET,Wifi.TABLE_NAME);
 	private static final String RECORDS_BY_DATE = String.format(
-			"select strftime('%%Y-%%m-%%d',%s/1000,'unixepoch') as date, count(*) as records " +
-			"from %s group by date order by date desc",Wifi.Columns.DATE,Wifi.TABLE_NAME);
+			"select strftime('%%Y-%%m-%%d',%s/1000+%d,'unixepoch') as date, count(*) as records " +
+			"from %s group by date order by date desc",Wifi.Columns.DATE,OFFSET,Wifi.TABLE_NAME);
 	private static final String RECORDS_BY_WEEKDAY = String.format(
-			"select strftime('%%w',%s/1000,'unixepoch') as weekday, count(*) as records " +
-			"from %s group by weekday",Wifi.Columns.DATE,Wifi.TABLE_NAME);
+			"select strftime('%%w',%s/1000+%d,'unixepoch') as weekday, count(*) as records " +
+			"from %s group by weekday",Wifi.Columns.DATE,OFFSET,Wifi.TABLE_NAME);
 
 	public RawQuery(Context context) {
 		super(context);
