@@ -6,11 +6,11 @@ import android.database.Cursor;
 
 public class RawQuery extends DbModel {
 
-	// select count(*) as number, a.ssid from wifi as a join (select _id,
+	// select count(*) as number, a.ssid as ssid from wifi as a join (select _id,
 	// bssid, ssid from wifi group by bssid) as b on a._id = b._id group by
-	// a.ssid having number >1 order by number;
+	// a.ssid having number >1 order by number desc;
 	private static final String TOP_NAMES = String
-			.format("select count(*) as n, a.%s from %s as a "
+			.format("select count(*) as n, a.%s as ssid from %s as a "
 					+ "join (select %s, %s, %s from %s group by %s) as b "
 					+ "on a.%s = b.%s group by a.%s having n > 1 order by n desc",
 					Wifi.Columns.SSID, Wifi.TABLE_NAME, Wifi.Columns._ID,
