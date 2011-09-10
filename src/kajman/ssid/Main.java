@@ -126,6 +126,15 @@ public class Main extends Activity implements OnClickListener {
 	    case R.id.menu_item_channels:
 	    	textStatus.setText(rawQuery.toString(rawQuery.fetchByChannels()));
 	    	return true;	
+	    case R.id.menu_item_dates:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchRecordsByDate()));
+	    	return true;
+	    case R.id.menu_item_hours:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchRecordsByHour()));
+	    	return true;
+	    case R.id.menu_item_weekdays:
+	    	textStatus.setText(rawQuery.toString(rawQuery.fetchRecordsByWeekday()));
+	    	return true;
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
