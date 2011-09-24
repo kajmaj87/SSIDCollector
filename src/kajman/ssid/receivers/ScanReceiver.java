@@ -50,12 +50,12 @@ public class ScanReceiver extends BroadcastReceiver {
     settingsModel.closeDb();
     long saved = wifiModel.save(wifis);
     //very aggresive scanning after finding new wifi
-    if(System.currentTimeMillis() - wifiModel.fetchLastScanTime() < 15000){
+    if(System.currentTimeMillis() - wifiModel.fetchLastScanTime() < 120000){
     	wifiManager.startScan();
     }
     wifiModel.closeDb();
-    log.v("Scan "+scanNumber+" saved. Took "+(System.currentTimeMillis()-time)+"ms.");
-    if(saved>0) log.v("Saved "+saved+" new records.");
+    log.v(scanNumber+": "+(System.currentTimeMillis()-time)+"ms, seen: "+wifis.size()+", saved: "+saved);
+    //if(saved>0) log.v("Saved "+saved+" new records.");
     Log.d("SSID", String.format("Saved %d in %dms. Scan number: %d",saved,System.currentTimeMillis()-time,scanNumber));
     log.closeDb();
   }

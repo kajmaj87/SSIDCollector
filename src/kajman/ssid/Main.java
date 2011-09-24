@@ -10,6 +10,7 @@ import kajman.ssid.model.WifiModel;
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.MulticastLock;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -64,16 +65,25 @@ public class Main extends Activity implements OnClickListener {
 			}
 		}
 		if (view.getId() == R.id.buttonImport) {
-			try {
-				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
-				if(ExportHelper.importDatabaseFrom(Environment.getExternalStorageDirectory()+"/ssid.db")){
-					Toast.makeText(this, "Import succesful", Toast.LENGTH_SHORT).show();
-				}else{
-					Toast.makeText(this, "Import failed", Toast.LENGTH_SHORT).show();
-				}
-			} catch (IOException e) {
-				Toast.makeText(this, "Import encountered an error", Toast.LENGTH_SHORT).show();
-				Log.d("SSID","Error: "+e);
+//			try {
+//				Log.d("SSID", "Directory is: " +Environment.getExternalStorageDirectory()+"/ssid.db");
+//				if(ExportHelper.importDatabaseFrom(Environment.getExternalStorageDirectory()+"/ssid.db")){
+//					Toast.makeText(this, "Import succesful", Toast.LENGTH_SHORT).show();
+//				}else{
+//					Toast.makeText(this, "Import failed", Toast.LENGTH_SHORT).show();
+//				}
+//			} catch (IOException e) {
+//				Toast.makeText(this, "Import encountered an error", Toast.LENGTH_SHORT).show();
+//				Log.d("SSID","Error: "+e);
+//			}
+			WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+			MulticastLock multi = wifi.createMulticastLock("SSID Collector");
+			if(multi.isHeld()){
+				Log.d("SSID","Multicast is being released.");
+				multi.release();
+			}else{
+				Log.d("SSID","Multicast is being acquired.");
+				multi.acquire();
 			}
 		}
 		if (view.getId() == R.id.buttonScan) {
